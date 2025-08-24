@@ -2,13 +2,16 @@ on:
   push:
     branches:
       - master
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: "testing java file"
-        run: echo "java file"
-      - name: Compile Java files
-        run: javac *.java
-      - name: Run Java program
-        run: java y
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Build Docker image
+        run: docker build -t java-app .
+
+      - name: Run Docker container
+        run: docker run java-app
